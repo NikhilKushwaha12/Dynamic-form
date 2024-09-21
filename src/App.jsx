@@ -1,9 +1,20 @@
 
 import React, { useState } from 'react';
 import './App.css'; // Assuming external styling
+import logo from './assets/WhatsApp Image 2024-09-21 at 12.47.30 PM.jpeg';
+import logoo from './assets/image.jpeg'// Adjust the path if different
+import IndustrySelect from './components/IndustrySelect';
+import logooo from './assets/image2.jpeg'
+import LocationSelect from './components/LocationSelect';
+import Footer from "./components/Footer"
+import SectorPreference from './components/SectorPreference'
 
 function App() {
   const [step, setStep] = useState(1); // Main step tracking
+
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
+  const [showReasonOptions, setShowReasonOptions] = useState(false);
+
   const [userData, setUserData] = useState({
     jobChange: '',
     name: '',
@@ -15,7 +26,7 @@ function App() {
     education: '',
     experience: '',
     salesExperience: '',
-    salesExperienceYears: '', 
+    salesExperienceYears: '',
     industry: '',
     jobChanges: '',
     responsibilities: '',
@@ -24,38 +35,112 @@ function App() {
     designation: '',
     resume: '',
     profilePicture: '',
-    interviewDate: ''
+    interviewDate: '',
+    phoneNumber: "",
+   notInterestedReason: '',
+   preferredSector: '',
+
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    phoneNumber: "",
   });
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(phoneNumber);
+  };
+
   const handleInputChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+
+    // Validate email and phone number
+    if (name === "email") {
+      if (!validateEmail(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Please enter a valid email address.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({ ...prevErrors, email: "" }));
+      }
+    }
+    if (name === "phoneNumber") {
+      if (!validatePhoneNumber(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          phoneNumber: "Please enter a valid 10-digit phone number.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({ ...prevErrors, phoneNumber: "" }));
+      }
+    }
+  };
+
+  const handleNext = () => {
+    if (!errors.email && !errors.phoneNumber && userData.email && userData.phoneNumber) {
+      setStep(step + 1);
+    } else {
+      alert("Please fill the form correctly before proceeding.");
+    }
+
+
+    if (step === 13) {
+      setStep(9);
+    }
   };
 
   const goToNextStep = () => {
-    setStep(step + 1);
+    if (step === 1 && userData.jobChange) {
+      setStep(2);
+    } else if (
+      step === 2 &&
+      userData.phoneNumber &&
+      !errors.phoneNumber &&
+      userData.email &&
+      !errors.email
+    ) {
+      setStep(3);
+    } else if (step === 2 && !userData.phoneNumber && !userData.email) {
+      alert("Please enter both phone number and email before proceeding.");
+    }
   };
-
   return (
+
     <div className="form-container">
+      <div className="logo-container">
+        <img src={logo} alt="Logo" className="form-logo" />
+
+      </div>
+
       {/* Step 1: Are you looking for a job change? */}
       {step === 1 && (
-        <div >
-          <h1>Are you looking for a job change?</h1>
+        <div className='fhead' >
           <div>
-          <label>
-            <input
-              type="radio"
-              name="jobChange"
-              value="yes"
-              onChange={handleInputChange}
-              checked={userData.jobChange === 'yes'}
-            />
-            Yes
-          </label>
+            <img src={logoo} alt="logo" className="form-logoo" />
+          </div>
+          <h2 className='headM'> Are you looking for a job change?</h2>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChange"
+                value="yes"
+                onChange={handleInputChange}
+                checked={userData.jobChange === 'yes'}
+              />
+              Yes
+            </label>
           </div>
           <label >
             <input
-            className='jobC'
+              className='jobC'
               type="radio"
               name="jobChange"
               value="no"
@@ -67,7 +152,7 @@ function App() {
 
           {/* Show Name Input if user selects 'Yes' */}
           {userData.jobChange === 'yes' && (
-            <div>
+            <div className='fhead'>
               <label className='Ename'>Please enter your name</label>
               <input
                 className="input-field"
@@ -85,31 +170,115 @@ function App() {
               </button>
             </div>
           )}
+
+
+
+
+          {userData.jobChange === 'no' && (
+
+
+            <div className='headM_m'>
+              <div>
+                <img src={logooo} alt="logo" className="form-logoo" />
+              </div>
+              <p>Would you like to register your profile? We can send job alerts in the future.</p>
+              <div> <label>
+                <input
+                  type="radio"
+                  name="profileRegistration"
+                  value="yes"
+                  onChange={() => setUserData({ ...userData, profileRegistration: true })}
+                />
+                Yes
+              </label></div>
+
+              <label>
+                <input
+                  type="radio"
+                  name="profileRegistration"
+                  value="no"
+                  onChange={() => setUserData({ ...userData, profileRegistration: false })}
+                />
+                No
+              </label>
+            </div>
+          )}
+
+          {userData.profileRegistration && (
+            <div className='fhead'>
+              <label className='Ename'>Please enter your name</label>
+              <input
+                className="input-field"
+                name="name"
+                value={userData.name}
+                onChange={handleInputChange}
+                placeholder="Your name"
+              />
+              <button
+                className="btn"
+                onClick={() => {
+                  setShowThankYouMessage(true);
+                }}
+                disabled={!userData.name}
+              >
+                Next
+              </button>
+              {showThankYouMessage && (
+                <div>
+                  <h2>Thank you for visiting! We will contact you soon with future opportunities.</h2>
+                </div>
+              )}
+            </div>
+
+          )}
+
+
+
+          {userData.registerProfile && (
+            <div className='fhead'>
+              <label className='Ename'>May I know your name?</label>
+              <input
+                className="input-field"
+                name="name"
+                value={userData.name}
+                onChange={handleInputChange}
+                placeholder="Your name"
+              />
+              <button
+                className="btn"
+                onClick={goToNextStep}
+                disabled={!userData.name} // Disable next button until name is entered
+              >
+                Next
+              </button>
+            </div>
+          )}
+
         </div>
+
       )}
 
       {/* Step 2: Enter phone number and email */}
       {step === 2 && (
-        <div>
+        <div className="fhead">
           <h1>Hi {userData.name}</h1>
-          <label> Please enter your mobile number</label>
+          <p className="reqU_2">Let's complete your profile</p>
+          <label>Please enter your mobile number</label>
           <input
             className="input-field"
-            name="mobile"
-            value={userData.mobile}
+            name="phoneNumber"
+            value={userData.phoneNumber}
             onChange={handleInputChange}
-            placeholder="Mobile number"
+            placeholder="10-digit phone number"
           />
-          {/* <button
-            className="btn"
-            onClick={goToNextStep}
-            disabled={!userData.mobile} // Disable next until phone is entered
-          >
-            Next
-          </button> */}
+          {errors.phoneNumber && <p style={{ color: 'red' }}>{errors.phoneNumber}</p>}
 
-          {userData.mobile && (
-            <div>
+
+
+
+          {/* Email Input */}
+          {userData.phoneNumber && (
+            <div className="fhead">
               <label>Please enter your email address</label>
               <input
                 className="input-field"
@@ -118,55 +287,24 @@ function App() {
                 onChange={handleInputChange}
                 placeholder="Email address"
               />
-              
+              {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
             </div>
           )}
 
           {/* New Residing Location Dropdown */}
           {userData.email && (
             <div>
-              <label>What is your residing location?</label>
-              <select
-                className="input-field"
-                name="location"
+
+              <LocationSelect
                 value={userData.location}
-                onChange={handleInputChange}
-              >
-                <option value="">Select your state</option>
-                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-                <option value="Bihar">Bihar</option>
-                <option value="Chhattisgarh">Chhattisgarh</option>
-                <option value="Goa">Goa</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Madhya Pradesh">Madhya Pradesh</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Odisha">Odisha</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Sikkim">Sikkim</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Telangana">Telangana</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="Uttarakhand">Uttarakhand</option>
-                <option value="West Bengal">West Bengal</option>
-              </select>
+                handleInputChange={handleInputChange}
+              />
+
+
               <button
                 className="btn"
                 onClick={goToNextStep}
-                 // Disable next until location is selected
+              // Disable next until location is selected
               >
                 Next
               </button>
@@ -174,151 +312,172 @@ function App() {
           )}
         </div>
       )}
-{/* Step 3: Ask reason for job change */}
-{step === 3 && (
-  <div>
-  <h1>Hi {userData.name}, Let's understand your need</h1>
-  <h2>May I know the major reason for your job change in your current/previous company?</h2>
-  <p className='reqU'>So, we can better understand your requirements.</p>
+      {/* Step 3: Ask reason for job change */}
+      {step === 3 && (
+        <div className='fhead'>
+          <h1>Hi {userData.name}, Let's understand your need</h1>
+          <h2>May I know the major reason for your job change in your current/previous company?</h2>
+          <p className='reqU'>So, we can better understand your requirements.</p>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="Looking salary hike"
-        checked={userData.reasonForChange === 'Looking salary hike'}
-        onChange={handleInputChange}
-      />
-      Looking salary hike
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="Looking salary hike"
+                checked={userData.reasonForChange === 'Looking salary hike'}
+                onChange={handleInputChange}
+              />
+              Looking salary hike
+            </label>
+          </div>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="Looking on roll job"
-        checked={userData.reasonForChange === 'Looking on roll job'}
-        onChange={handleInputChange}
-      />
-      Looking on roll job
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="Looking on roll job"
+                checked={userData.reasonForChange === 'Looking on roll job'}
+                onChange={handleInputChange}
+              />
+              Looking on roll job
+            </label>
+          </div>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="Having issues in working environment/culture/work process"
-        checked={userData.reasonForChange === 'Having issues in working environment/culture/work process'}
-        onChange={handleInputChange}
-      />
-      Having issues in working environment/culture/work process
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="Having issues in working environment/culture/work process"
+                checked={userData.reasonForChange === 'Having issues in working environment/culture/work process'}
+                onChange={handleInputChange}
+              />
+              Having issues in working environment/culture/work process
+            </label>
+          </div>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="I'm working as off roll"
-        checked={userData.reasonForChange === "I'm working as off roll"}
-        onChange={handleInputChange}
-      />
-      I'm working as off roll
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="I'm working as off roll"
+                checked={userData.reasonForChange === "I'm working as off roll"}
+                onChange={handleInputChange}
+              />
+              I'm working as off roll
+            </label>
+          </div>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="Transferring me to another location"
-        checked={userData.reasonForChange === 'Transferring me to another location'}
-        onChange={handleInputChange}
-      />
-      Transferring me to another location
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="Transferring me to another location"
+                checked={userData.reasonForChange === 'Transferring me to another location'}
+                onChange={handleInputChange}
+              />
+              Transferring me to another location
+            </label>
+          </div>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="I'm not working. So looking job"
-        checked={userData.reasonForChange === "I'm not working. So looking job"}
-        onChange={handleInputChange}
-      />
-      I'm not working. So looking job
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="I'm not working. So looking job"
+                checked={userData.reasonForChange === "I'm not working. So looking job"}
+                onChange={handleInputChange}
+              />
+              I'm not working. So looking job
+            </label>
+          </div>
 
-  <div>
-    <label>
-      <input
-        type="radio"
-        name="reasonForChange"
-        value="Other reason"
-        checked={userData.reasonForChange === 'Other reason'}
-        onChange={handleInputChange}
-      />
-      Other reason
-    </label>
-  </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="reasonForChange"
+                value="Other reason"
+                checked={userData.reasonForChange === 'Other reason'}
+                onChange={handleInputChange}
+              />
+              Other reason
+            </label>
+          </div>
 
-  <button
-    className="btn"
-    onClick={goToNextStep}
-    disabled={!userData.reasonForChange} // Disable next until reason is selected
-  >
-    Next
-  </button>
-</div>
-
-        
-      )}
-
-{/* Step 6: Job offer from Max Life Insurance */}
-       {step === 4 && (
-        <div>
-          <h1>Job Offer from Max Life Insurance</h1>
-          <p className='dynamic'>Hi {userData.name}, are you interested in this job?</p>
-
-<p className='descP'>
-<div className='headD'>Job Description:</div>
-The Associate Agency Development Manager (Agency / Tied Channel ) :-
-will be responsible for (Recruitment, Coach & Sales):
-
-<div className='headD'>(As a Recruiter):-</div>
-Your primary role will be to drive quality recruitment of Life Advisors and build up the agency business.
-<div className='headD'>(As a Coach):-</div>
-
-As a coach, your role will be to develop Life Advisors to make them self
-dependent by setting goals for them, conducting reviews and assisting
-them in their career path with Max Life Insurance.
-<div className='headD'>(As a Sales Leader):-</div>
-As a sales leader, your role will be to drive sales for the company through your team of life advisors, motivate your team and lead them in meeting the goals set forth by the company.
-
-
-
-
-</p>
-
-          <button className="btn" onClick={goToNextStep}>I'm Interested</button>
-          <button className="btn" onClick={goToNextStep}>Not Interested</button>
+          <button
+            className="btn"
+            onClick={handleNext}
+            disabled={!userData.reasonForChange} // Disable next until reason is selected
+          >
+            Next
+          </button>
         </div>
+
+
       )}
 
+      {/* Step 6: Job offer from Max Life Insurance */}
+   {step === 4 && (
+  <div className='fhead'>
+    <h1>Job Offer from Max Life Insurance</h1>
+    <p className='dynamic'>Hi {userData.name}, are you interested in this job?</p>
+
+    <p className='descP'>
+      <div className='headD'>Job Description:</div>
+      {/* Job Description Content */}
+    </p>
+
+    {/* Interested and Not Interested Buttons */}
+    <button className="btn" onClick={handleNext}>I'm Interested</button>
+    <button className="btn" onClick={() => setShowReasonOptions(true)}>Not Interested</button>
+
+    {/* Show reason options if Not Interested is clicked */}
+    {showReasonOptions && (
+      <div className="reason-options">
+        <h2 className='headM_4'>May I know the reason, why you are not interested? So, we can assist you with a better job in the future.</h2>
+        {/* Reason options */}
+        <div></div>
+        {["Life Insurance products is complicated to sell", "Huge target", "Huge pressure & work stress", "No job stability & career growth", "Difficulties to recruiting life advisor's", "Bad working environment", "Other reason"].map((reason, index) => (
+          <label key={index}>
+            <input 
+              type="radio" 
+              name="notInterestedReason" 
+              value={reason} 
+              onChange={handleInputChange} 
+            />
+            {reason}
+          </label>
+        ))}
+
+        {/* Show Next Button after selecting a reason */}
+        {userData.notInterestedReason && (
+          <button className="btn" onClick={() => setStep(13)}>
+            Next
+          </button>
+        )}
+      </div>
+    )}
+  </div>
+)}
+
+{/* Step 13: Sector Preference Page (Only if Not Interested is clicked) */}
+{step === 13 && (
+  <SectorPreference
+    userData={userData}
+    handleInputChange={handleInputChange}
+    handleNext={handleNext}
+  />
+)}
 
       {/* Step 3: Sequential details */}
       {step === 5 && (
-        <div>
+        <div className='fhead'>
           <h1>Personal Details</h1>
 
           <label>Date of Birth:</label>
@@ -331,7 +490,7 @@ As a sales leader, your role will be to drive sales for the company through your
           />
 
           {userData.dob && (
-            <div>
+            <div className='fhead'>
               <label>How long have you been residing in {userData.location || "your location"}?</label>
               <input
                 className="input-field"
@@ -342,280 +501,304 @@ As a sales leader, your role will be to drive sales for the company through your
               />
             </div>
           )}
-{userData.dob && (
-                  <div>
-                            <label>What is your total work experience?</label>
-                            <select name="experience" className="input-field" onChange={handleInputChange}>
-                              <option value="">Select Experience</option>
-                               <option value="2.5">Less than 2.5 years</option>
-                              <option value="2.5">2.5 years or more</option>
-                             </select>
-                           </div>
+          {userData.dob && (
+            <div className='fhead'>
+              <label>What is your total work experience?</label>
+              <select name="experience" className="input-field" onChange={handleInputChange}>
+                <option value="">Select Experience</option>
+                <option value="2.5">Less than 2.5 years</option>
+                <option value="2.5">2.5 years or more</option>
+              </select>
+            </div>
           )}
-          
+
           {userData.residingTime && (
-  <div>
-    <label>What is your highest qualification?</label>
-    <select
-      className="input-field"
-      name="education"
-      value={userData.education}
-      onChange={handleInputChange}
-    >
-      <option value="">Select Qualification</option>
-      <option value="undergraduate">Undergraduate</option>
-      <option value="graduate">Graduate</option>
-      <option value="postgraduate">Postgraduate</option>
-      <option value="diploma">Diploma</option>
-      <option value="mba">MBA/PGDBM</option>
-    </select>
-  </div>
-)}
+            <div>
+              <label>What is your highest qualification?</label>
+              <select
+                className="input-field"
+                name="education"
+                value={userData.education}
+                onChange={handleInputChange}
+              >
+                <option value="">Select Qualification</option>
+                <option value="undergraduate">Undergraduate</option>
+                <option value="graduate">Graduate</option>
+                <option value="postgraduate">Postgraduate</option>
+                <option value="diploma">Diploma</option>
+                <option value="mba">MBA/PGDBM</option>
+              </select>
+            </div>
+          )}
 
-{userData.education && (
-  <div>
-    <label>Do you have experience in sales or marketing?</label>
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="salesExperience"
-          value="yes"
-          onChange={handleInputChange}
-          checked={userData.salesExperience === 'yes'}
-        />
-        Yes
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="salesExperience"
-          value="no"
-          onChange={handleInputChange}
-          checked={userData.salesExperience === 'no'}
-        />
-        No
-      </label>
-    </div>
-  </div>
-)}
+          {userData.education && (
+            <div className='fhead'>
+              <label>Do you have experience in sales or marketing?</label>
+              <div >
+                <label>
+                  <input
+                    type="radio"
+                    name="salesExperience"
+                    value="yes"
+                    onChange={handleInputChange}
+                    checked={userData.salesExperience === 'yes'}
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="salesExperience"
+                    value="no"
+                    onChange={handleInputChange}
+                    checked={userData.salesExperience === 'no'}
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+          )}
 
-{userData.salesExperience === 'yes' && (
-  <div>
-    <label>
-      Out of your {userData.experience} years of experience, how many do you have in sales/marketing?
-    </label>
-    <input
-      className="input-field"
-      name="salesExperienceYears"
-      value={userData.salesExperienceYears || ''}
-      onChange={handleInputChange}
-      placeholder="Years in sales/marketing"
-    />
+          {userData.salesExperience === 'yes' && (
+            <div className='fhead'>
+              <label>
+                Out of your {userData.experience} years of experience, how many do you have in sales/marketing?
+              </label>
+              <input
+                className="input-field"
+                name="salesExperienceYears"
+                value={userData.salesExperienceYears || ''}
+                onChange={handleInputChange}
+                placeholder="Years in sales/marketing"
+              />
 
-    <label>What is your current/past industry?</label>
-    <select
-      className="input-field"
-      name="industry"
-      value={userData.industry}
-      onChange={handleInputChange}
-    >
-      <option value="">Select Industry</option>
-      <option value="FMCG">FMCG</option>
-      <option value="Pharma">Pharma</option>
-      <option value="Consumer Durables">Consumer Durables</option>
-      <option value="Automobiles">Automobiles</option>
-      <option value="Telecom / ISP">Telecom / ISP</option>
-      <option value="Life Insurance">Life Insurance</option>
-      <option value="General Insurance">General Insurance</option>
-      <option value="Health Insurance">Health Insurance</option>
-      <option value="Banking">Banking</option>
-      <option value="Financial Services / NBFC / Loans / Securities / Broking">Financial Services / NBFC / Loans / Securities / Broking</option>
-      <option value="Retail">Retail</option>
-      <option value="Real Estate">Real Estate</option>
-      <option value="Media / Entertainment">Media / Entertainment</option>
-      <option value="Internet / Ecommerce">Internet / Ecommerce</option>
-      <option value="Advertising / PR">Advertising / PR</option>
-      <option value="Agriculture / Dairy">Agriculture / Dairy</option>
-      <option value="Electricals / Switchgears">Electricals / Switchgears</option>
-      <option value="Cement">Cement</option>
-      <option value="Education">Education</option>
-      <option value="Ceramics / Sanitary ware">Ceramics / Sanitary ware</option>
-      <option value="Fertilizers / Pesticides">Fertilizers / Pesticides</option>
-      <option value="Medical / Healthcare / Hospital">Medical / Healthcare / Hospital</option>
-      <option value="Tyres">Tyres</option>
-      <option value="Others">Others</option>
-    </select>
-    <button
+              <IndustrySelect
+                industry={userData.industry}
+                onChange={handleInputChange}
+              />
+              <button
                 className="btn"
-                onClick={goToNextStep}
-                disabled={!userData.email} // Disable next until email is entered
+                onClick={handleNext}
+                disabled={!userData.email}
               >
                 Next
               </button>
-  </div>
-)}
+            </div>
+          )}
+
+          {userData.salesExperience === 'no' && (
+            <div className='fhead'>
+              <IndustrySelect
+                industry={userData.industry}
+                onChange={handleInputChange}
+              />
+              <button
+                className="btn"
+                onClick={handleNext}
+                disabled={!userData.email}
+              >
+                Next
+              </button>
+            </div>
+          )}
+
         </div>
       )}
 
 
-{step === 6 && (
-  <div>
-    <h2 className='changR'>How many job changes within your 3 years of experience?</h2>
+      {step === 6 && (
+        <div className='fhead'>
+          <h2 className='changR'>How many job changes within your 3 years of experience?</h2>
 
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="jobChanges" // All radio buttons share the same name
-          value="None" // Set the value for this option
-          checked={userData.jobChanges === "None"} // Manage checked state
-          onChange={handleInputChange}
-        />
-        None
-      </label>
-    </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChanges" // All radio buttons share the same name
+                value="None" // Set the value for this option
+                checked={userData.jobChanges === "None"} // Manage checked state
+                onChange={handleInputChange}
+              />
+              None
+            </label>
+          </div>
 
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="jobChanges"
-          value="1 Job"
-          checked={userData.jobChanges === "1 Job"}
-          onChange={handleInputChange}
-        />
-        1 Job
-      </label>
-    </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChanges"
+                value="1 Job"
+                checked={userData.jobChanges === "1 Job"}
+                onChange={handleInputChange}
+              />
+              1 Job
+            </label>
+          </div>
 
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="jobChanges"
-          value="2 Job"
-          checked={userData.jobChanges === "2 Job"}
-          onChange={handleInputChange}
-        />
-        2 Job
-      </label>
-    </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChanges"
+                value="2 Job"
+                checked={userData.jobChanges === "2 Job"}
+                onChange={handleInputChange}
+              />
+              2 Job
+            </label>
+          </div>
 
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="jobChanges"
-          value="3 Job"
-          checked={userData.jobChanges === "3 Job"}
-          onChange={handleInputChange}
-        />
-        3 Job
-      </label>
-    </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChanges"
+                value="3 Job"
+                checked={userData.jobChanges === "3 Job"}
+                onChange={handleInputChange}
+              />
+              3 Job
+            </label>
+          </div>
 
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="jobChanges"
-          value="4 Job"
-          checked={userData.jobChanges === "4 Job"}
-          onChange={handleInputChange}
-        />
-        4 Job
-      </label>
-    </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChanges"
+                value="4 Job"
+                checked={userData.jobChanges === "4 Job"}
+                onChange={handleInputChange}
+              />
+              4 Job
+            </label>
+          </div>
 
-    <div>
-      <label>
-        <input
-          type="radio"
-          name="jobChanges"
-          value="5+ Job"
-          checked={userData.jobChanges === "5+ Job"}
-          onChange={handleInputChange}
-        />
-        5+ Job
-      </label>
-    </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="jobChanges"
+                value="5+ Job"
+                checked={userData.jobChanges === "5+ Job"}
+                onChange={handleInputChange}
+              />
+              5+ Job
+            </label>
+          </div>
 
-    <button className="btn" onClick={goToNextStep}>Next</button>
-  </div>
-)}
+          <button className="btn" onClick={handleNext}
+            disabled={!userData.jobChanges}
+          >Next</button>
+        </div>
+      )}
 
 
 
 
-{step === 7 && (
-         <div>
+      {step === 7 && (
+        <div className='fhead'>
           <h1>What is your current/past major responsibility?</h1>
-         <select name="responsibilities" className="input-field" onChange={handleInputChange}>
+          <select name="responsibilities" className="input-field" onChange={handleInputChange}>
             <option value="">Select Responsibility</option>
-             <option value="directSales">Direct Sales / Channel Sales</option>
-             <option value="handlingDealer">Handling Dealer / Distribution channel</option>
-           <option value="teamHandling">Team Handling of field executives</option>
+            <option value="directSales">Direct Sales / Channel Sales</option>
+            <option value="handlingDealer">Handling Dealer / Distribution channel</option>
+            <option value="teamHandling">Team Handling of field executives</option>
             <option value="teleSales">Tele Sales / Tele Marketing</option>
           </select>
-          <button className="btn" onClick={goToNextStep}>Next</button>
+          <button className="btn" onClick={handleNext}
+            disabled={!userData.responsibilities}>Next</button>
+        </div>
+      )}
+      {step === 8 && (
+        <div>
+          <h2 className='headM_2'>Do you have experience in team handling?</h2>
+          <button
+            className="btn"
+            onClick={() => {
+              setUserData({ ...userData, teamHandling: 'yes' });
+              // Don't call handleNext yet; wait for team members input
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              setUserData({ ...userData, teamHandling: 'no' });
+              handleNext(); // Proceed to the next step immediately
+            }}
+          >
+            No
+          </button>
+
+          {/* Show team members input only if "Yes" is selected */}
+          {userData.teamHandling === 'yes' && (
+            <div className='fhead'>
+              <h2 className='headM_2'>How many team members have you handled?</h2>
+              <input
+                className="input-field"
+                name="teamMembers"
+                type="number" // Ensures only numbers can be entered
+                onChange={handleInputChange}
+                placeholder="Number of team members"
+              />
+              <button
+                className="btn"
+                onClick={() => {
+                  handleNext(); // Proceed to the next step after entering team members
+                }}
+                disabled={!userData.teamMembers} // Disable if no number is entered
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
 
-       {step === 8 && (
-        <div>
-          <h1>Do you have experience in team handling?</h1>
-          <button className="btn" onClick={() => {setUserData({...userData, teamHandling: 'yes'}); goToNextStep();}}>Yes</button>
-           <button className="btn" onClick={() => {setUserData({...userData, teamHandling: 'no'}); goToNextStep();}}>No</button>
+      {step === 9 && (
+        <div className='fhead'>
+          <h2 className='headM_2'>What is your current/previous company name?</h2>
+          <input className="input-field" name="companyName" onChange={handleInputChange} placeholder="Company Name" />
+          <h2 className='headM_2'>Designation</h2>
+          <input className="input-field" name="designation" onChange={handleInputChange} placeholder="Designation" />
+          <button className="btn" onClick={handleNext}>Next</button>
         </div>
-     )}
-
-      {step === 9 && userData.teamHandling === 'yes' && (
-        <div>
-          <h1>How many team members have you handled?</h1>
-          <input className="input-field" name="teamMembers" onChange={handleInputChange} placeholder="Number of team members" />
-           <button className="btn" onClick={goToNextStep}>Next</button>
-         </div>
-       )}
+      )}
 
       {step === 10 && (
-         <div>
-           <h1>What is your current/previous company name?</h1>
-           <input className="input-field" name="companyName" onChange={handleInputChange} placeholder="Company Name" />
-           <h1>Designation</h1>
-          <input className="input-field" name="designation" onChange={handleInputChange} placeholder="Designation" />
-          <button className="btn" onClick={goToNextStep}>Next</button>
+        <div className='fhead'>
+          <h2 className='headM_3'>Would you like to share your resume?</h2>
+          <button className="btn" onClick={() => handleNext()}>Yes</button>
+          <button className="btn" onClick={handleNext}>Later</button>
+          {userData.resume && (
+            <input type="file" name="resume" onChange={handleInputChange} />
+          )}
+          <input type="file" name="profilePicture" onChange={handleInputChange} placeholder="Profile Picture" />
         </div>
       )}
 
-       {step === 11 && (
-        <div>
-           <h1>Would you like to share your resume?</h1>
-          <button className="btn" onClick={() => goToNextStep()}>Yes</button>
-          <button className="btn" onClick={goToNextStep}>Later</button>
-           {userData.resume && (
-             <input type="file" name="resume" onChange={handleInputChange} />
-          )}
-           <input type="file" name="profilePicture" onChange={handleInputChange} placeholder="Profile Picture" />
-         </div>
-       )}
-
-      {step === 12 && (
-        <div>
-           <h1>Plan your interview</h1>
-           <h2>Please choose your availability day for the interview.</h2>
+      {step === 11 && (
+        <div className='fhead'>
+          <h1>Plan your interview</h1>
+          <h2 className='intwe'>Please choose your availability day for the interview.</h2>
           <input className="input-field" type="date" name="interviewDate" onChange={handleInputChange} />
-           <button className="btn" onClick={goToNextStep}>Next</button>
-         </div>
-       )}
-
-{step === 13 && (
-         <div>
-           <h1 className='end'>Thank you!</h1>
-          <p className='end'>We have successfully processed your candidature. Our executive will call you shortly to confirm your interview details.</p>
-         </div>
+          <button className="btn" onClick={handleNext}>Next</button>
+        </div>
       )}
 
+      {step === 12 && (
+        <div className='fhead'>
+          <h1 className='end'>Thank you!</h1>
+          <p className='end'>We have successfully processed your candidature. Our executive will call you shortly to confirm your interview details.</p>
+        </div>
+
+      )}
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }
