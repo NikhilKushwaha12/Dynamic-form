@@ -4,6 +4,7 @@ body {
   background-color: white;
   /* Light background for contrast */
   display: flex;
+    width: 100% !important;
   /* Use flexbox for centering */
   justify-content: center;
   /* Center horizontally */
