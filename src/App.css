@@ -348,10 +348,9 @@ label {
 }
 
 .foot {
-  background-color: #ccc;
+   background-color: #ccc;
   position: relative;
   margin-top: 30px;
-  line-height: 0.7;
   padding: 5px;
 }
 
