@@ -8,12 +8,20 @@ import logooo from './assets/image2.jpeg'
 import LocationSelect from './components/LocationSelect';
 import Footer from "./components/Footer"
 import SectorPreference from './components/SectorPreference'
+import BankingRoles from './components/Banking';
+
 
 function App() {
   const [step, setStep] = useState(1); // Main step tracking
 
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
+
   const [showReasonOptions, setShowReasonOptions] = useState(false);
+
+  const [selectedSector, setSelectedSector] = useState("");
+
+
+
 
   const [userData, setUserData] = useState({
     jobChange: '',
@@ -39,6 +47,7 @@ function App() {
     phoneNumber: "",
    notInterestedReason: '',
    preferredSector: '',
+   roles:'',
 
   });
   const [errors, setErrors] = useState({
@@ -84,17 +93,26 @@ function App() {
   };
 
   const handleNext = () => {
-    if (!errors.email && !errors.phoneNumber && userData.email && userData.phoneNumber) {
+    // First check if it's step 4 and Tech or Fresher is selected
+    console.log("Current Step:", step, "Selected Sector:", selectedSector);
+    if (step === 6 && (selectedSector === 'Tech' || selectedSector === 'Fresher')) {
+      setStep(8); // Skip step 7, go directly to step 8
+      console.log("Current Step:", step, "Selected Sector:", selectedSector);
+    } 
+    
+    // Then handle the regular step logic
+    else if (!errors.email && !errors.phoneNumber && userData.email && userData.phoneNumber) {
       setStep(step + 1);
     } else {
       alert("Please fill the form correctly before proceeding.");
     }
-
-
+  
+    // Special case for step 13 (if applicable)
     if (step === 13) {
       setStep(9);
     }
   };
+  
 
   const goToNextStep = () => {
     if (step === 1 && userData.jobChange) {
@@ -113,11 +131,17 @@ function App() {
   };
   return (
 
-    <div className="form-container">
-      <div className="logo-container">
-        <img src={logo} alt="Logo" className="form-logo" />
 
-      </div>
+
+      <div className="form-container">
+ <div className="logo-container">
+        <img src={logo} alt="Logo" className="form-logo" />
+        <div style={{ borderBottom: "2px solid black", width: "100%", margin: "10px auto" }}></div>
+   </div>
+<span className="border tl"></span>
+<span className="border tr"></span>
+<span className="border bl"></span>
+<span className="border br"></span>
 
       {/* Step 1: Are you looking for a job change? */}
       {step === 1 && (
@@ -127,7 +151,8 @@ function App() {
           </div>
           <h2 className='headM'> Are you looking for a job change?</h2>
           <div>
-            <label>
+          
+            <label >
               <input
                 type="radio"
                 name="jobChange"
@@ -137,10 +162,12 @@ function App() {
               />
               Yes
             </label>
+            
           </div>
+          <form >
           <label >
             <input
-              className='jobC'
+              
               type="radio"
               name="jobChange"
               value="no"
@@ -150,17 +177,23 @@ function App() {
             No
           </label>
 
+
+          </form>
+         
+
           {/* Show Name Input if user selects 'Yes' */}
           {userData.jobChange === 'yes' && (
             <div className='fhead'>
-              <label className='Ename'>Please enter your name</label>
+               <form className="container">   
+               <label className='Ename '>Please enter your name</label>
               <input
                 className="input-field"
                 name="name"
                 value={userData.name}
                 onChange={handleInputChange}
                 placeholder="Your name"
-              />
+              /></form>
+           
               <button
                 className="btn"
                 onClick={goToNextStep}
@@ -173,35 +206,41 @@ function App() {
 
 
 
-
           {userData.jobChange === 'no' && (
 
 
-            <div className='headM_m'>
-              <div>
-                <img src={logooo} alt="logo" className="form-logoo" />
-              </div>
-              <p>Would you like to register your profile? We can send job alerts in the future.</p>
-              <div> <label>
-                <input
-                  type="radio"
-                  name="profileRegistration"
-                  value="yes"
-                  onChange={() => setUserData({ ...userData, profileRegistration: true })}
-                />
-                Yes
-              </label></div>
+<div className='headM_m'>
+<div>
+  <img src={logooo} alt="logo" className="form-logoo" />
+</div>
 
-              <label>
-                <input
-                  type="radio"
-                  name="profileRegistration"
-                  value="no"
-                  onChange={() => setUserData({ ...userData, profileRegistration: false })}
-                />
-                No
-              </label>
-            </div>
+<p className='headM_m'>Would you like to register your profile? We can send job alerts in the future.</p>
+
+{/* Combine both radio buttons in a single form */}
+<form className="container">
+  <label className="form-control">
+    <input
+      type="radio"
+      name="profileRegistration"
+      value="yes"
+      onChange={() => setUserData({ ...userData, profileRegistration: true })}
+      checked={userData.profileRegistration === true} // Ensure only one option is checked at a time
+    />
+    Yes
+  </label>
+<div></div>
+  <label className="form-control">
+    <input
+      type="radio"
+      name="profileRegistration"
+      value="no"
+      onChange={() => setUserData({ ...userData, profileRegistration: false })}
+      checked={userData.profileRegistration === false} // Ensure only one option is checked at a time
+    />
+    No
+  </label>
+</form>
+</div>
           )}
 
           {userData.profileRegistration && (
@@ -237,6 +276,7 @@ function App() {
           {userData.registerProfile && (
             <div className='fhead'>
               <label className='Ename'>May I know your name?</label>
+            
               <input
                 className="input-field"
                 name="name"
@@ -315,12 +355,12 @@ function App() {
       {/* Step 3: Ask reason for job change */}
       {step === 3 && (
         <div className='fhead'>
-          <h1>Hi {userData.name}, Let's understand your need</h1>
+          <h1 className='fhead_2'>Hi {userData.name}, Let's understand your need</h1>
           <h2>May I know the major reason for your job change in your current/previous company?</h2>
           <p className='reqU'>So, we can better understand your requirements.</p>
 
-          <div>
-            <label>
+          <div className="container">
+            <label >
               <input
                 type="radio"
                 name="reasonForChange"
@@ -332,7 +372,7 @@ function App() {
             </label>
           </div>
 
-          <div>
+          <div className="container">
             <label>
               <input
                 type="radio"
@@ -345,7 +385,7 @@ function App() {
             </label>
           </div>
 
-          <div>
+          <div className="container">
             <label>
               <input
                 type="radio"
@@ -358,7 +398,7 @@ function App() {
             </label>
           </div>
 
-          <div>
+          <div className="container">
             <label>
               <input
                 type="radio"
@@ -371,7 +411,7 @@ function App() {
             </label>
           </div>
 
-          <div>
+          <div className="container">
             <label>
               <input
                 type="radio"
@@ -384,7 +424,7 @@ function App() {
             </label>
           </div>
 
-          <div>
+          <div className="container">
             <label>
               <input
                 type="radio"
@@ -397,7 +437,7 @@ function App() {
             </label>
           </div>
 
-          <div>
+          <div className="container">
             <label>
               <input
                 type="radio"
@@ -422,28 +462,73 @@ function App() {
 
       )}
 
-      {/* Step 6: Job offer from Max Life Insurance */}
+{/* current professsions options */}
    {step === 4 && (
   <div className='fhead'>
-    <h1>Job Offer from Max Life Insurance</h1>
-    <p className='dynamic'>Hi {userData.name}, are you interested in this job?</p>
+    <h1 className='fhead_2'>Current Profession</h1>
+    <p className='dynamic'>Hi {userData.name}, what are you currently working as?</p>
 
     <p className='descP'>
-      <div className='headD'>Job Description:</div>
+      <div className='headD'></div>
       {/* Job Description Content */}
     </p>
 
-    {/* Interested and Not Interested Buttons */}
-    <button className="btn" onClick={handleNext}>I'm Interested</button>
-    <button className="btn" onClick={() => setShowReasonOptions(true)}>Not Interested</button>
+
+    <div>
+      <div><label>
+    <input 
+      type="radio" 
+      name="preferredSector" 
+      value="Banking" 
+      onChange={() => {
+        setSelectedSector("Banking");
+        setShowReasonOptions(true); 
+      }} // Executes handleNext when "Banking" is selected
+    />
+    Banking
+  </label></div>
+  
+<div>
+  <label>
+    <input 
+      type="radio" 
+      name="preferredSector" 
+      value="Tech" 
+      onChange={() => {
+        setSelectedSector("Tech");
+        handleNext();  // Skip to step 8
+      }} // Executes setShowReasonOptions(true) when "Tech" is selected
+    />
+    Tech
+  </label>
+  </div>
+
+
+  <label>
+    <input 
+      type="radio" 
+      name="preferredSector" 
+      value="Fresher" 
+      onChange={() => {
+        setSelectedSector("Fresher");
+        handleNext();  // Skip to step 8
+      }}// Executes setShowReasonOptions(true) when "Fresher" is selected
+    />
+    Fresher
+  </label>
+
+
+</div>
+
+
 
     {/* Show reason options if Not Interested is clicked */}
     {showReasonOptions && (
       <div className="reason-options">
-        <h2 className='headM_4'>May I know the reason, why you are not interested? So, we can assist you with a better job in the future.</h2>
+        <h2 className='headM_4'>Which jobs you would like to apply for?</h2>
         {/* Reason options */}
         <div></div>
-        {["Life Insurance products is complicated to sell", "Huge target", "Huge pressure & work stress", "No job stability & career growth", "Difficulties to recruiting life advisor's", "Bad working environment", "Other reason"].map((reason, index) => (
+        {["Sales CASA", "Sales Wealth", "Sales NRI", "No job stability & career growth", "Sales LAP", "Sales Home Loan", "Sales Vechile Finance","Sales Equity", "Credit Operation", "Branch Operation"].map((reason, index) => (
           <label key={index}>
             <input 
               type="radio" 
@@ -457,7 +542,7 @@ function App() {
 
         {/* Show Next Button after selecting a reason */}
         {userData.notInterestedReason && (
-          <button className="btn" onClick={() => setStep(13)}>
+          <button className="btn" onClick={() => setStep(5)}>
             Next
           </button>
         )}
@@ -467,13 +552,24 @@ function App() {
 )}
 
 {/* Step 13: Sector Preference Page (Only if Not Interested is clicked) */}
-{step === 13 && (
+{/* {step === 13 && (
   <SectorPreference
     userData={userData}
     handleInputChange={handleInputChange}
     handleNext={handleNext}
   />
-)}
+)} */}
+
+
+{/* Step 13: Sector Preference Page (Only if Not Interested is clicked) */}
+ {/* {step === 13 && (
+  <BankingRoles
+    userData={userData}
+    handleInputChange={handleInputChange}
+    handleNext={handleNext}
+  />
+)}  */}
+
 
       {/* Step 3: Sequential details */}
       {step === 5 && (
@@ -697,7 +793,7 @@ function App() {
 
 
 
-      {step === 7 && (
+      {step === 7 && selectedSector !== "Tech" && selectedSector !== "Fresher" && (
         <div className='fhead'>
           <h1>What is your current/past major responsibility?</h1>
           <select name="responsibilities" className="input-field" onChange={handleInputChange}>
@@ -711,7 +807,7 @@ function App() {
             disabled={!userData.responsibilities}>Next</button>
         </div>
       )}
-      {step === 8 && (
+      {step === 8 &&(
         <div>
           <h2 className='headM_2'>Do you have experience in team handling?</h2>
           <button

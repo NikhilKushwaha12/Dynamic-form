@@ -1,52 +1,172 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Light background for contrast */
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; 
- font-family:Arial, Helvetica, sans-serif;
+  font-family: monospace !important;
+  background-color: white;
+  /* Light background for contrast */
+  display: flex;
+  /* Use flexbox for centering */
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .form-container {
-  max-width: 800px; /* Max width for larger screens */
-  width: 90%; /* Full width for smaller screens */
-  height: auto; /* Allow dynamic height */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color:white; /* White background for the form */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  display: flex; /* Use flexbox for vertical alignment */
-  flex-direction: column; /* Arrange children in a column */
-  align-items: center; /* Center children horizontally */
-  max-width: 600px;
-  /* margin: 0 auto;
-  padding: 20px; */
-  background-color:white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-top-left-radius: 37px 140px;
+  border-top-right-radius: 23px 130px;
+  border-bottom-left-radius: 110px 19px;
+  border-bottom-right-radius: 120px 24px;
+  display: block;
+  position: relative;
+  border: solid 3px #6e7491;
+  padding: 40px 60px;
+  max-width: 800px;
+  width: 70%;
+  margin: 100px auto 0;
+  font-size: 17px;
+  line-height: 28px;
+  box-shadow: 13px 15px 8px -10px rgba(0, 0, 0, 0.3);
+  transition: all 0.13s ease-in;
 }
+
+.form-container:hover {
+  box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
+}
+
+.form-container:hover.border {
+  transform: translateY(4px) rotate(-5deg);
+}
+
+.border {
+  position: absolute;
+  transition: all 0.13s ease-in;
+}
+
+.border:before,
+.border:after {
+  color: #515d9c;
+  font-size: 15px;
+  position: absolute;
+}
+
+.tl {
+  position: absolute;
+  left: -50px;
+  top: -63px;
+  font-weight: 600;
+}
+
+.tl:before {
+  content: "37px";
+  left: 120px;
+  top: 30px;
+}
+
+.tl:after {
+  content: "140px";
+  left: 0px;
+  top: 80px;
+}
+
+.tr {
+  right: -50px;
+  top: -63px;
+  font-weight: 600;
+}
+
+.tr:before {
+  content: "23px";
+  left: 0;
+  top: 30px;
+}
+
+.tr:after {
+  content: "130px";
+  left: 130px;
+  top: 80px;
+}
+
+.bl {
+  left: -50px;
+  bottom: -71px;
+  font-weight: 600;
+}
+
+.bl:before {
+  content: "110px";
+  left: 120px;
+  top: -30px;
+}
+
+.bl:after {
+  content: "19px";
+  left: 0px;
+  top: -90px;
+}
+
+.br {
+  right: -50px;
+  bottom: -63px;
+  font-weight: 600;
+}
+
+.br:before {
+  content: "120px";
+  left: 0;
+  top: -30px;
+}
+
+.br:after {
+  content: "24px";
+  right: -10px;
+  top: -80px;
+}
+
+pre {
+  background: #edeff5;
+  padding: 20px;
+}
+
+<pre>.form-container {
+  border-top-left-radius: 37px 140px;
+  border-top-right-radius: 23px 130px;
+  border-bottom-left-radius: 110px 19px;
+  border-bottom-right-radius: 120px 24px;
+}
+
+</pre>
 .input-field {
-  display: block; /* Ensures the input takes up the full width available */
+  display: block;
   background-color: #ccc;
   border: 1px solid black;
   width: 300px !important;
   overflow-wrap: break-word;
-  margin-bottom: 20px; /* Adds space below the input field */
+  margin-bottom: 20px;
+  /* Adds space below the input field */
 }
+
 h1 {
   font-size: 24px;
-  margin-bottom: 20px; /* Space below heading */
-  color: #333; /* Dark text color */
-  text-align: center; /* Center the heading text */
+  margin-bottom: 20px;
+  /* Space below heading */
+  color: #333;
+  /* Dark text color */
+  text-align: center;
+  /* Center the heading text */
 }
 
 h2 {
   font-size: 20px;
-  margin-bottom: 10px; /* Space below subheading */
-  color: #555; /* Slightly lighter text color */
-  text-align: center; /* Center the subheading text */
+  margin-bottom: 10px;
+  /* Space below subheading */
+  color: #555;
+  /* Slightly lighter text color */
+  text-align: center;
+  /* Center the subheading text */
 }
 
 .input-field {
@@ -55,165 +175,251 @@ h2 {
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px; /* Increased font size */
-  color: #333; /* Dark text color for inputs */
+  font-size: 16px;
 }
 
 .btn {
   padding: 10px 20px;
-  background-color: #007bff; /* Primary button color */
+  background-color: #007bff;
+  /* Primary button color */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px; /* Increased font size */
-  transition: background-color 0.3s; /* Smooth transition for hover */
-  display: inline-block; /* Ensure proper alignment */
-  margin: 10px 5px; /* Add margin for spacing between buttons */
+  font-size: 16px;
+  
+  transition: background-color 0.3s;
+  
+  display: inline-block;
+  
+  margin: 10px 5px;
+ 
 }
 
-label{
-color: #000;
-
-
-}
-
-.btn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-.Ename{
-margin-bottom: 50px;
+label {
+  color: #000;
+  font-size: 20px;
   
 }
 
-.jobC{
+.btn:hover {
+  background-color: #0056b3;
+  /* Darker blue on hover */
+}
+
+.Ename {
+  margin-bottom: 50px;
+
+}
+
+.jobC {
   margin-bottom: 30px;
 
 }
 
 
-.reqU{
-color: #000;
-font-weight: 700;
+.reqU {
+  color: #000;
+  font-weight: 700;
 }
 
-.reqU_2{
-color: #000;
-font-weight: 700;
-text-align: center;
-margin-top: -13px;
-margin-bottom: 40px;
+.reqU_2 {
+  color: #000;
+  font-weight: 700;
+  text-align: center;
+  margin-top: -13px;
+  margin-bottom: 40px;
 }
-.descP{
+
+.descP {
   color: #000;
 }
 
-.headD{
-font-weight: 800;
-margin-top: 15px;
+.headD {
+  font-weight: 800;
+  margin-top: 15px;
 }
 
 
-.dynamic{
-color: #000;
+.dynamic {
+  color: #000;
 
 }
 
-.changR{
-color: #000;
+.changR {
+  color: #000;
 
 }
 
-.end{
+.end {
 
-color: #000;
+  color: #000;
 
 }
+
 @media (max-width: 768px) {
   .form-container {
-    margin: 20px; /* Less margin on smaller screens */
+    margin: 20px;
+    /* Less margin on smaller screens */
   }
 }
 
 .logo-container {
-  background-color: rgb(65, 63, 63); /* Black background for logo container */
-  width: 100%;
-  text-align: center; /* Center the logo inside the container */
-  border-bottom: 2px solid white;
-  border: 1px solid black;
-  border-radius: 4px;
+  /* Black background for logo container */
+
+
+
+  transform:
+    rotate3d(.5, -.866, 0, 15deg) rotate(1deg);
+
+  transition:
+    transform .4s ease,
+    box-shadow .4s ease;
+  border-radius: .5em;
+
+  &:hover {
+    transform:
+      rotate3d(0, 0, 0, 0deg) rotate(0deg);
+  }
+
 }
 
 /* Style for the logo */
 .form-logo {
- 
+  left: 30%;
+
+  position: relative;
   border-radius: 4px;
-  width: 150px; 
-  margin-bottom: 10px; 
+  width: 150px;
+  margin-bottom: 10px;
   margin-top: 12px;
-  
+
 
 }
-.form-logoo{
-  width: 60%; 
-left: 40%;
 
-position: relative;
+.form-logoo {
+  width: 70%;
+  left: 30%;
+
+  position: relative;
 }
 
-.headM{
-color: #000;
-text-align: left;
-font-size: 20px;
-}
-.headM_m{
-
-  color: #000;
-  text-align: left;
-  font-size: 17px;
-
-}
-.headM_2{
+.headM {
   color: #000;
   text-align: left;
   font-size: 25px;
-padding: 10px;
 }
-.headM_3{
+
+.headM_m {
+
+  color: #000;
+  text-align: left;
+  font-size: 20px;
+
+}
+
+.headM_2 {
+  color: #000;
+  text-align: left;
+  font-size: 25px;
+  padding: 10px;
+}
+
+.headM_3 {
   color: #000;
   text-align: left;
   font-size: 30px;
-padding: 10px;
+  padding: 10px;
 }
-.headM_4{
+
+.headM_4 {
   color: #000;
   text-align: left;
   font-size: 25px;
-padding: 10px;
-line-height: 1.2;
+  padding: 10px;
+  line-height: 1.2;
 }
-.intwe{
-font-size: 15px;
-text-align: left;
+
+.intwe {
+  font-size: 15px;
+  text-align: left;
 
 }
-.foot{
+
+.foot {
   background-color: #ccc;
   position: relative;
-margin-top: 30px;
-line-height: 0.7;
-padding: 5px;
+  margin-top: 30px;
+  line-height: 0.7;
+  padding: 5px;
 }
-small{
+
+small {
   font-size: 10px;
 
 }
-.fhead{
+
+.fhead {
   padding: 10px;
+}
+
+.fhead_2 {
+
+  font-size: 35px !important;
 }
 
 .reason-options label {
   display: block;
-  margin-bottom: 10px; /* Optional for spacing */
+  margin-bottom: 10px;
+  /* Optional for spacing */
+}
+
+
+/* Hide the original radio input */
+input[type=radio] {
+  --s: 0.8em;     /* control the size */
+  --c: #009688; /* the active color */
+  
+  height: var(--s);
+  aspect-ratio: 1;
+  border: calc(var(--s)/8) solid #212020;
+  padding: calc(var(--s)/8);
+  background: 
+     radial-gradient(farthest-side,var(--c) 94%,#0000) 
+     50%/0 0 no-repeat content-box;
+  border-radius: 50%;
+  outline-offset: calc(var(--s)/10);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  font-size: inherit;
+  transition: .3s;
+  
+}
+input[type=radio]:checked {
+  border-color: var(--c);
+  background-size: 100% 100%;
+}
+
+input[type=radio]:disabled {
+  background: 
+     linear-gradient(#939393 0 0) 
+     50%/100% 20% no-repeat content-box;
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+@media print {
+  input[type=radio] {
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+    background: none;
+  }
+}
+
+label {
+ 
+
 }
