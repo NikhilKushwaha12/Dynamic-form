@@ -138,10 +138,7 @@ function App() {
         <img src={logo} alt="Logo" className="form-logo" />
         <div style={{ borderBottom: "2px solid black", width: "100%", margin: "10px auto" }}></div>
    </div>
-<span className="border tl"></span>
-<span className="border tr"></span>
-<span className="border bl"></span>
-<span className="border br"></span>
+
 
       {/* Step 1: Are you looking for a job change? */}
       {step === 1 && (
