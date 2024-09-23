@@ -154,11 +154,19 @@ overflow-x: hidden;
   display: block;
   background-color: #212121;
   border: 1px solid black;
-  width: 300px !important;
+  width: 300px;
   overflow-wrap: break-word;
   margin-bottom: 20px;
   /* Adds space below the input field */
 }
+@media (max-width: 468px) {
+  .input-field {
+    width: 100% ;
+    /* Less margin on smaller screens */
+  }
+}
+
+
 
 h1 {
   font-size: 24px;
@@ -181,7 +189,6 @@ h2 {
 }
 
 .input-field {
-  width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
