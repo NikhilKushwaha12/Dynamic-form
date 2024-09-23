@@ -792,7 +792,7 @@ function App() {
 
       {step === 7 && selectedSector !== "Tech" && selectedSector !== "Fresher" && (
         <div className='fhead'>
-          <h1>What is your current/past major responsibility?</h1>
+          <h1 className='respon' >What is your current/past major responsibility?</h1>
           <select name="responsibilities" className="input-field" onChange={handleInputChange}>
             <option value="">Select Responsibility</option>
             <option value="directSales">Direct Sales / Channel Sales</option>
