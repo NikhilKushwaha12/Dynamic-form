@@ -2,6 +2,9 @@ body {
   margin: 0;
   font-family: monospace !important;
   background-color: white;
+
+overflow-x: hidden;
+
   /* Light background for contrast */
   display: flex;
   /* Use flexbox for centering */
@@ -126,22 +129,29 @@ body {
   top: -80px;
 }
 
-pre {
-  background: #edeff5;
+.form-container {
+
   padding: 20px;
 }
 
-<pre>.form-container {
+
+
+.form-container {
   border-top-left-radius: 37px 140px;
   border-top-right-radius: 23px 130px;
   border-bottom-left-radius: 110px 19px;
   border-bottom-right-radius: 120px 24px;
 }
 
-</pre>
+
+
+
+
+
+
 .input-field {
   display: block;
-  background-color: #ccc;
+  background-color: #212121;
   border: 1px solid black;
   width: 300px !important;
   overflow-wrap: break-word;
@@ -350,7 +360,6 @@ label {
   background-color: #ccc;
   position: relative;
   margin-top: 30px;
-  line-height: 0.7;
   padding: 5px;
 }
 
@@ -419,7 +428,3 @@ input[type=radio]:disabled {
   }
 }
 
-label {
- 
-
-}
