@@ -395,6 +395,7 @@ small {
 
 .fhead {
   padding: 10px;
+  color: #000;
 }
 
 .fhead_2 {
@@ -403,12 +404,6 @@ small {
 }
 .respon{
 font-size: 23px;
-<<<<<<< HEAD
-
-}
-=======
->>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
-
 }
 .reason-options label {
   display: block;

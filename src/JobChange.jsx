@@ -4,7 +4,7 @@ import React from 'react';
 const JobChanges = ({ userData, handleInputChange, handleNext }) => {
   return (
     <div className="fhead">
-      <h2 className="changR">How many job changes within your 3 years of experience?</h2>
+      <h2 className="changR">How many job changes within your {userData.experience} years of experience?</h2>
 
       <div>
         <label>
