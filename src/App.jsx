@@ -250,19 +250,15 @@ function App() {
       )}
 
 
-      {step === 7 && selectedSector !== "Tech" && selectedSector !== "Fresher" && (
-        <div className='fhead'>
-          <h1>What is your current/past major responsibility?</h1>
-          <select name="responsibilities" className="input-field" onChange={handleInputChange}>
-            <option value="">Select Responsibility</option>
-            <option value="directSales">Direct Sales / Channel Sales</option>
-            <option value="handlingDealer">Handling Dealer / Distribution channel</option>
-            <option value="teamHandling">Team Handling of field executives</option>
-            <option value="teleSales">Tele Sales / Tele Marketing</option>
-          </select>
-          <button className="btn" onClick={handleNext}
-            disabled={!userData.responsibilities}>Next</button>
-        </div>
+      {step === 8 && selectedSector === "Tech" && (
+        <TechAdditionalQuestions setStep={setStep} />
+      )}
+
+
+
+
+      {step === 7 && selectedSector === "Banking" && (
+        <BsfiSalesExperienceDetails setStep={setStep} />
       )}
 
 
