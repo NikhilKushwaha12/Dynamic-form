@@ -154,20 +154,31 @@ overflow-x: hidden;
   display: block;
   background-color: #212121;
   border: 1px solid black;
+<<<<<<< HEAD
   width: 300px ;
+=======
+  width: 300px;
+>>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
   overflow-wrap: break-word;
   margin-bottom: 20px;
   /* Adds space below the input field */
 }
 @media (max-width: 468px) {
   .input-field {
+<<<<<<< HEAD
     width: 100% 
+=======
+    width: 100% ;
+>>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
     /* Less margin on smaller screens */
   }
 }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
 
 h1 {
   font-size: 24px;
@@ -218,8 +229,12 @@ h2 {
 label {
   color: #000;
   font-size: 20px;
+<<<<<<< HEAD
   font-family:Arial, Helvetica, sans-serif;
 
+=======
+   font-family:Arial, Helvetica, sans-serif;
+>>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
 }
 
 .btn:hover {
@@ -388,9 +403,13 @@ small {
 }
 .respon{
 font-size: 23px;
+<<<<<<< HEAD
 
 }
+=======
+>>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
 
+}
 .reason-options label {
   display: block;
   margin-bottom: 10px;
