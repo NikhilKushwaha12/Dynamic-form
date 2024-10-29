@@ -152,33 +152,21 @@ overflow-x: hidden;
 .input-field {
   overflow: hidden !important;
   display: block;
-  background-color: #212121;
-  border: 1px solid black;
-<<<<<<< HEAD
+  background-color:rgb(233, 224, 224) !important;
+  border: 0.1px solid rgb(122, 121, 121) ;
+color: #000 !important;
   width: 300px ;
-=======
-  width: 300px;
->>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
   overflow-wrap: break-word;
   margin-bottom: 20px;
   /* Adds space below the input field */
 }
 @media (max-width: 468px) {
   .input-field {
-<<<<<<< HEAD
     width: 100% 
-=======
-    width: 100% ;
->>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
     /* Less margin on smaller screens */
   }
 }
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
 
 h1 {
   font-size: 24px;
@@ -203,7 +191,7 @@ h2 {
 .input-field {
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 4px;
   font-size: 16px;
 }
@@ -217,7 +205,6 @@ h2 {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  
   transition: background-color 0.3s;
   
   display: inline-block;
@@ -229,12 +216,9 @@ h2 {
 label {
   color: #000;
   font-size: 20px;
-<<<<<<< HEAD
   font-family:Arial, Helvetica, sans-serif;
-
-=======
    font-family:Arial, Helvetica, sans-serif;
->>>>>>> 688fc5ae78ca6ffe858f372e45d5bd4a4d41eb28
+
 }
 
 .btn:hover {
@@ -473,9 +457,10 @@ input[type=radio]:disabled {
 select {
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #797777;
   border-radius: 5px;
-  background-color: black;
+  color: #000;
+  background-color:rgb(233, 224, 224) !important;
   cursor: pointer;
 }
 
@@ -563,9 +548,11 @@ input[type="text"], input[type="date"] {
   padding: 10px;
   display: block;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #807e7e;
   border-radius: 5px;
   margin-top: 5px;
+  color: #000;
+  background-color:rgb(233, 224, 224) !important;
 }
 
 /* Radio button styling */
@@ -578,4 +565,11 @@ input[type="text"], input[type="date"] {
 .techbtn{
 background-color: rgb(14, 125, 237);
 margin-bottom: 10px;
+}
+
+textarea{
+  background-color:rgb(233, 224, 224) !important;
+color: #000;
+border: 1px solid rgb(49, 49, 49);
+font-weight: 800;
 }

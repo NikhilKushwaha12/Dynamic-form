@@ -13,9 +13,9 @@ const CurrentJob = ({
   
 }) => {
 
+ 
 
-
-  return (
+ return (
     <div className='fhead'>
       <h1 className='fhead_2'>Current Profession</h1>
       <p className='dynamic'>Hi {userData.name}, what are you currently working as?</p>
@@ -88,7 +88,7 @@ const CurrentJob = ({
 
       {selectedSector === "Banking" && showReasonOptions && (
         <div className="reason-options">
-          <h2 className='headM_4'>Which jobs you would like to apply for?</h2>
+          <h2 className='headM_4'>What sales experience do you have?</h2>
           {["Home Loan", "CASA", "Personal Loan (PL)", "Credit Card", "Stock Market", "Life Insurance", "Wealth Management"].map((reason, index) => (
             <label key={index}>
               <input
