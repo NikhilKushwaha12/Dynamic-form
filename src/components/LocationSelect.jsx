@@ -73,6 +73,7 @@ const LocationSelect = ({ value, handleInputChange, stateCities, selectedState }
         <option value="Karnataka">Karnataka</option>
         <option value="Kerala">Kerala</option>
         <option value="Madhya Pradesh">Madhya Pradesh</option>
+
         <option value="Maharashtra">Maharashtra</option>
         <option value="Manipur">Manipur</option>
         <option value="Meghalaya">Meghalaya</option>
@@ -88,17 +89,17 @@ const LocationSelect = ({ value, handleInputChange, stateCities, selectedState }
         <option value="Uttar Pradesh">Uttar Pradesh</option>
         <option value="Uttarakhand">Uttarakhand</option>
         <option value="West Bengal">West Bengal</option>
-        <option value="Manipur">Andaman and Nicobar Islands</option>
+        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
         <option value="Meghalaya">Chandigarh
         </option>
-        <option value="Mizoram">Dadra and Nagar Haveli and Daman & Diu
+        <option value="Dadra and Nagar Haveli and Daman & Diu">Dadra and Nagar Haveli and Daman & Diu
         </option>
-        <option value="Nagaland">Delhi</option>
-        <option value="Odisha">Jammu & Kashmir
+        <option value="Delhi">Delhi</option>
+        <option value="Jammu & Kashmir">Jammu & Kashmir
         </option>
-        <option value="Punjab">Ladakh</option>
-        <option value="Rajasthan">Lakshadweep</option>
-        <option value="Sikkim">Puducherry</option>
+        <option value="Ladakh">Ladakh</option>
+        <option value="Lakshadweep">Lakshadweep</option>
+        <option value="Puducherry">Puducherry</option>
       </select>
 
 

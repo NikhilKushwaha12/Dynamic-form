@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 
 const Tech = ({ setStep }) => {
   const [selectedSector, setSelectedSector] = useState(""); // Sector selection
