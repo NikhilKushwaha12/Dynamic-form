@@ -62,7 +62,7 @@ const FirstPage = ({ userData, handleInputChange, goToNextStep, logoo, logooo })
       {userData.jobChange === 'no' && (
         <div className='headM_m'>
           <div>
-            <img src={logooo} alt="logo" className="form-logoo" />
+            
           </div>
           <p className='headM_m'>Thank you for visiting!</p>
         </div>

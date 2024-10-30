@@ -90,7 +90,7 @@ const LocationSelect = ({ value, handleInputChange, stateCities, selectedState }
         <option value="Uttarakhand">Uttarakhand</option>
         <option value="West Bengal">West Bengal</option>
         <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-        <option value="Meghalaya">Chandigarh
+        <option value="Chandigarh">Chandigarh
         </option>
         <option value="Dadra and Nagar Haveli and Daman & Diu">Dadra and Nagar Haveli and Daman & Diu
         </option>
